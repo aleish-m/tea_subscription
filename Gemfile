@@ -35,12 +35,15 @@ group :development, :test do
   gem 'rspec-rails' 
   gem 'pry'
   gem 'factory_bot_rails'
-  gem 'simplecov'
   gem 'faker'
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
+end
+
+group :test do 
+  gem 'simplecov', require: false
 end
 
 
