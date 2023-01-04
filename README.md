@@ -1,4 +1,4 @@
-# README - Rails Engine API
+# README - Tea Subscription Project
 
 ## About the Project
  This project is a MVP Backend Application for a Tea Subscription Application. It allows for users to see all available teas then add multiple teas to a subscription with a chosen order frequency. The user is also able to view all the subscriptions they have set up and stop a subscription from continuing.
