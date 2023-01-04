@@ -18,23 +18,23 @@ describe 'Create new Subscription' do
       subscription_data = JSON.parse(response.body, symbolize_names: true)
       subscription = subscription_data[:data]
 
-      created_subscription = user.subscription.last
+      created_subscription = user.subscriptions.last
 
       expect(created_subscription.title).to eq('New Subscription')
       expect(created_subscription.status).to eq("active")
       expect(created_subscription.frequency).to eq(params[:frequency])
-      expect(created_subscription.teas).to eq([teas])
+      expect(created_subscription.teas).to eq(teas)
 
       expect(subscription_data).to be_a(Hash)
       expect(subscription_data.count).to eq(1)
 
-      expect(subscription[:id].to_i).to eq(created_post.id)
+      expect(subscription[:id].to_i).to eq(created_subscription.id)
       expect(subscription[:type]).to eq('subscription')
       expect(subscription[:attributes].count).to eq(5)
       expect(subscription[:attributes][:title]).to eq('New Subscription')
-      expect(subscription[:attributes][:status]).to eq(created_subscription.post_status)
-      expect(subscription[:attributes][:frequency]).to eq(created_subscription.description)
-      expect(subscription[:attributes][:price]).to eq(created_subscription.tone)
+      expect(subscription[:attributes][:status]).to eq(created_subscription.status)
+      expect(subscription[:attributes][:frequency]).to eq(created_subscription.frequency)
+      expect(subscription[:attributes][:price]).to eq(Tea.total_cost)
       expect(subscription[:attributes][:created_at].to_date).to eq(created_subscription.created_at.to_date)
     end    
   end
