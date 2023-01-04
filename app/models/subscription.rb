@@ -1,7 +1,7 @@
 class Subscription < ApplicationRecord
   belongs_to :user
-  has_many :tea_subscriptions
-  has_many :teas, through: :tea_subscriptions
+  has_many :teas_subscriptions
+  has_many :teas, through: :teas_subscriptions
 
   enum status: {active: 0, canceled: 1}
 

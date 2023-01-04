@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Subscription, type: :model do
  describe 'relationships' do
     it { should belong_to(:user) } 
-    it { should have_many(:tea_subscriptions) }
-    it { should have_many(:teas).through(:tea_subscriptions) }
+    it { should have_many(:teas_subscriptions) }
+    it { should have_many(:teas).through(:teas_subscriptions) }
   end
 
   describe 'validations' do 
