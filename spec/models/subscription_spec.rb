@@ -12,7 +12,7 @@ RSpec.describe Subscription, type: :model do
     it { should validate_presence_of :status }
     it { should validate_presence_of :frequency }
     it { should validate_presence_of :user_id }
-    it { should validate_numericality_of :frequency }
+    it { should validate_numericality_of(:frequency).is_in(1..12) }
     it { should define_enum_for(:status).with_values([:active, :canceled])}
   end
 end
