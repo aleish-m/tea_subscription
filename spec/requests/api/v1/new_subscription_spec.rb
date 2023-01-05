@@ -36,6 +36,64 @@ describe 'Create new Subscription' do
       expect(subscription[:attributes][:frequency]).to eq(created_subscription.frequency)
       expect(subscription[:attributes][:price]).to eq(Tea.total_cost)
       expect(subscription[:attributes][:created_at].to_date).to eq(created_subscription.created_at.to_date)
-    end    
+    end
+  end
+
+  describe 'sad path' do
+    it 'It returns a 400 status code error if invalid user id is received' do
+      user = create(:user)
+      teas = create_list(:tea, 5)
+
+      params = {  title: 'New Subscription',
+                  teas: teas.map {|tea| tea.id},
+                  frequency: 2 }
+
+      post "/api/v1/users/#{user.id + 1}/subscription", params: params
+
+      expect(response).to have_http_status(400)
+
+      subscription_data = JSON.parse(response.body, symbolize_names: true)
+  
+      created_subscription = user.subscriptions.last
+
+      expect(created_subscription).to eq(nil)
+
+
+      expect(subscription_data).to be_a(Hash)
+      expect(subscription_data.count).to eq(2)
+
+      expect(subscription_data).to have_key(:error)
+      expect(subscription_data[:error]).to eq(400)
+      expect(subscription_data).to have_key(:message)
+      expect(subscription_data[:message]).to be_a(Array)
+      expect(subscription_data).to eq({ error: 400, message: ['User must exist'] })
+    end
+
+    it 'It returns a 400 status code error if required subscription fields are not received' do
+      user = create(:user)
+      teas = create_list(:tea, 5)
+
+      params = { teas: teas.map {|tea| tea.id} }
+
+      post "/api/v1/users/#{user.id}/subscription", params: params
+
+      expect(response).to have_http_status(400)
+
+      subscription_data = JSON.parse(response.body, symbolize_names: true)
+  
+      created_subscription = user.subscriptions.last
+
+      expect(created_subscription).to eq(nil)
+
+
+      expect(subscription_data).to be_a(Hash)
+      expect(subscription_data.count).to eq(2)
+
+      expect(subscription_data).to have_key(:error)
+      expect(subscription_data[:error]).to eq(400)
+      expect(subscription_data).to have_key(:message)
+      expect(subscription_data[:message]).to be_a(Array)
+      expect(subscription_data).to eq({ error: 400, message: ["Title can't be blank", "Frequency can't be blank", "Frequency is not a number", "Frequency is not included in the list"] })
+    end
   end
 end
