@@ -23,6 +23,14 @@ class Api::V1::SubscriptionController < ApplicationController
     end
   end
 
+  def update
+    subscription = Subscription.find(params[:id])
+
+    if subscription.update(subscription_params)
+      render json: SubscriptionSerializer.new(subscription), status: :created
+    end
+  end
+
   private 
 
   def tea_id_params 
@@ -31,6 +39,6 @@ class Api::V1::SubscriptionController < ApplicationController
   end
 
   def subscription_params 
-    params.permit(:title, :frequency, :user_id)
+    params.permit(:title, :frequency, :user_id, :status)
   end
 end

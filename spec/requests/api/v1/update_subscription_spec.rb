@@ -34,7 +34,6 @@ describe 'Update Subscriptions' do
       expect(subscription_data[:attributes][:frequency]).to eq(subscription.frequency)
       expect(subscription_data[:attributes][:price]).to eq(Tea.total_cost)
       expect(subscription_data[:attributes][:created_at].to_date).to eq(subscription.created_at.to_date)
-
     end
   end
 end
