@@ -4,4 +4,9 @@ class SubscriptionSerializer
   attributes :price do |subscription|
     subscription.teas.total_cost
   end
+
+  def self.error(status, message)
+    { error: status,
+      message: message }
+  end
 end
