@@ -1,6 +1,17 @@
 class Api::V1::SubscriptionController < ApplicationController 
+
+  def index 
+    user = User.find_by(id: params[:user_id])
+
+    if user
+      subscriptions = user.subscriptions
+      render json: SubscriptionSerializer.new(subscriptions)
+    else
+      render json: SubscriptionSerializer.error(404, 'User must exist'), status: :not_found
+    end
+  end
+
   def create
-    user = User.find_by(id: user_params[:user_id])
     subscription = Subscription.new(subscription_params)
     sub_teas = tea_id_params.map {|tea_id| Tea.find(tea_id)}
 
@@ -17,10 +28,6 @@ class Api::V1::SubscriptionController < ApplicationController
   def tea_id_params 
     tea_ids = params.permit(:tea_ids)
     tea_ids[:tea_ids].split(',').map(&:to_i)
-  end
-
-  def user_params
-    params.permit(:user_id)
   end
 
   def subscription_params 
