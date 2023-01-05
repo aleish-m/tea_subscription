@@ -4,6 +4,6 @@ FactoryBot.define do
     description { Faker::Coffee.notes }
     temperature { Faker::Number.within(range: 85..130) }
     brew_time { Faker::Number.within(range: 1..10) }
-    price { Faker::Number.decimal(l_digits: 2) }
+    price { Faker::Number.within(range: 6.99..20.99).round(2) }
   end
 end

@@ -13,5 +13,17 @@ RSpec.describe Tea, type: :model do
     it { should validate_presence_of :brew_time }
     it { should validate_presence_of :price }
   end
+
+  describe 'Model Methods' do
+    describe '#total_cost' do
+      it 'provides the sum of all tea prices' do
+        tea_1 = create(:tea, price: 2.00)
+        tea_1 = create(:tea, price: 3.00)
+        tea_1 = create(:tea, price: 5.00)
+
+        expect(Tea.total_cost).to eq(10.00)
+      end
+    end
+  end
 end
 
