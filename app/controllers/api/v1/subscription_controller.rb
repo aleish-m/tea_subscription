@@ -2,7 +2,7 @@ class Api::V1::SubscriptionController < ApplicationController
   def create
     user = User.find_by(id: user_params[:user_id])
     subscription = Subscription.new(subscription_params)
-    sub_teas = params[:teas].map {|tea_id| Tea.find(tea_id)}
+    sub_teas = tea_id_params.map {|tea_id| Tea.find(tea_id)}
 
     if subscription.save 
       subscription.teas << sub_teas
@@ -13,6 +13,11 @@ class Api::V1::SubscriptionController < ApplicationController
   end
 
   private 
+
+  def tea_id_params 
+    tea_ids = params.permit(:tea_ids)
+    tea_ids[:tea_ids].split(',').map(&:to_i)
+  end
 
   def user_params
     params.permit(:user_id)

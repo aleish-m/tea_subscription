@@ -7,7 +7,7 @@ describe 'Create new Subscription' do
       teas = create_list(:tea, 5)
 
       params = {  title: 'New Subscription',
-                  teas: teas.map {|tea| tea.id},
+                  tea_ids: "#{teas.map {|tea| tea.id}.join(',')}",
                   frequency: 2 }
 
       post "/api/v1/users/#{user.id}/subscription", params: params
@@ -45,7 +45,7 @@ describe 'Create new Subscription' do
       teas = create_list(:tea, 5)
 
       params = {  title: 'New Subscription',
-                  teas: teas.map {|tea| tea.id},
+                  tea_ids: "#{teas.map {|tea| tea.id}.join(',')}",
                   frequency: 2 }
 
       post "/api/v1/users/#{user.id + 1}/subscription", params: params
@@ -73,7 +73,7 @@ describe 'Create new Subscription' do
       user = create(:user)
       teas = create_list(:tea, 5)
 
-      params = { teas: teas.map {|tea| tea.id} }
+      params = { tea_ids: "#{teas.map {|tea| tea.id}.join(',')}" }
 
       post "/api/v1/users/#{user.id}/subscription", params: params
 
