@@ -93,7 +93,7 @@ describe 'Create new Subscription' do
       expect(subscription_data[:error]).to eq(400)
       expect(subscription_data).to have_key(:message)
       expect(subscription_data[:message]).to be_a(Array)
-      expect(subscription_data).to eq({ error: 400, message: ["Title can't be blank", "Frequency can't be blank", "Frequency is not a number", "Frequency is not included in the list"] })
+      expect(subscription_data).to eq({ error: 400, message: ["Title can't be blank", "Frequency can't be blank", "Frequency is not a number", "Frequency value is not within 1-12"] })
     end
   end
 end
