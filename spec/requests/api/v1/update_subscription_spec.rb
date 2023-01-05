@@ -6,7 +6,7 @@ describe 'Update Subscriptions' do
       user = create(:user)
       subscription = create(:subscription, status: 'active')
 
-      params = {status: 'cancelled'}
+      params = { status: 'cancelled' }
 
       patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
 
@@ -40,10 +40,9 @@ describe 'Update Subscriptions' do
       user = create(:user)
       subscription = create(:subscription, status: 'active', frequency: 3)
 
-      params = {status: 'cancelled',
-                title: 'Update Subscription Title',
-                frequency: 5
-                }
+      params = { status: 'cancelled',
+                 title: 'Update Subscription Title',
+                 frequency: 5 }
 
       patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
 
@@ -76,10 +75,10 @@ describe 'Update Subscriptions' do
       subscription = create(:subscription, status: 'active', frequency: 3)
 
       params = {
-                status: 'new',
-                title: '',
-                frequency: 'monthly'
-                }
+        status: 'new',
+        title: '',
+        frequency: 'monthly'
+      }
 
       patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
 
@@ -98,7 +97,9 @@ describe 'Update Subscriptions' do
       expect(subscription_response[:error]).to eq(400)
       expect(subscription_response).to have_key(:message)
       expect(subscription_response[:message]).to be_a(Array)
-      expect(subscription_response).to eq({ error: 400, message: ["Title can't be blank", "Frequency is not a number", "Frequency value is not within 1-12", "Status can only be 'active' or 'cancelled'"] })
+      expect(subscription_response).to eq({ error: 400,
+                                            message: ["Title can't be blank", 'Frequency is not a number', 'Frequency value is not within 1-12',
+                                                      "Status can only be 'active' or 'cancelled'"] })
     end
   end
 end

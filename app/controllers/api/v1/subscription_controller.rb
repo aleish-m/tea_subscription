@@ -1,6 +1,5 @@
-class Api::V1::SubscriptionController < ApplicationController 
-
-  def index 
+class Api::V1::SubscriptionController < ApplicationController
+  def index
     user = User.find_by(id: params[:user_id])
 
     if user
@@ -13,9 +12,9 @@ class Api::V1::SubscriptionController < ApplicationController
 
   def create
     subscription = Subscription.new(subscription_params)
-    sub_teas = tea_id_params.map {|tea_id| Tea.find(tea_id)}
+    sub_teas = tea_id_params.map { |tea_id| Tea.find(tea_id) }
 
-    if subscription.save 
+    if subscription.save
       subscription.teas << sub_teas
       render json: SubscriptionSerializer.new(subscription), status: :created
     else
@@ -25,30 +24,31 @@ class Api::V1::SubscriptionController < ApplicationController
 
   def update
     subscription = Subscription.find(params[:id])
+
     if subscription.update(subscription_params)
       render json: SubscriptionSerializer.new(subscription), status: :created
     else
       render json: SubscriptionSerializer.error(400, subscription.errors.full_messages), status: :bad_request
     end
-
+    
     rescue ArgumentError
     add_status_error(subscription)
     render json: SubscriptionSerializer.error(400, subscription.errors.full_messages), status: :bad_request
   end
 
-  private 
+  private
 
   def add_status_error(subscription)
     subscription.save
     subscription.errors.add(:status, "can only be 'active' or 'cancelled'")
   end
 
-  def tea_id_params 
+  def tea_id_params
     tea_ids = params.permit(:tea_ids)
     tea_ids[:tea_ids].split(',').map(&:to_i)
   end
 
-  def subscription_params 
+  def subscription_params
     params.permit(:title, :frequency, :user_id, :status)
   end
 end
