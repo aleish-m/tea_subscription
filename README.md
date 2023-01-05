@@ -94,7 +94,7 @@ Example params:
 ```
 { 
   title: 'New Subscription',
-  tea_ids: "1, 2, 6, 10",
+  tea_ids: '1, 2, 6, 10',
   frequency: 2 
 }
 ```
