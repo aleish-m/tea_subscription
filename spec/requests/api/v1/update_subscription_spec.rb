@@ -8,7 +8,7 @@ describe 'Update Subscriptions' do
 
       params = {status: 'cancelled'}
 
-      patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}"
+      patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
 
       subscription_data = JSON.parse(response.body, symbolize_names: true)
       subscription = subscriptions_data[:data]
