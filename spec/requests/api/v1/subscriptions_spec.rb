@@ -6,7 +6,7 @@ describe 'View Subscriptions' do
       user = create(:user)
       subscriptions = create_list(:subscription, 5, user: user)
 
-      get "/api/v1/users/#{user.id}/subscription"
+      get "/api/v1/users/#{user.id}/subscriptions"
 
       expect(response).to be_successful
       expect(response).to have_http_status(200)
@@ -14,11 +14,9 @@ describe 'View Subscriptions' do
       subscriptions_data = JSON.parse(response.body, symbolize_names: true)
       subscriptions = subscriptions_data[:data]
 
-
       expect(subscriptions.count).to eq(5)
 
       subscriptions.each do |subscription|
-
         expect(subscription).to have_key(:id)
         expect(subscription[:id]).to be_a(String)
 
@@ -51,7 +49,7 @@ describe 'View Subscriptions' do
       it 'sends a empty list if there are no subscriptions for a user' do
         user = create(:user)
 
-        get "/api/v1/users/#{user.id}/subscription"
+        get "/api/v1/users/#{user.id}/subscriptions"
 
         expect(response).to be_successful
         expect(response).to have_http_status(200)
@@ -63,8 +61,7 @@ describe 'View Subscriptions' do
         expect(subscriptions_data[:data]).to be_an(Array)
       end
 
-       it 'returns a 404 status code and a empty item hash when an invalid item id is requested' do
-
+      it 'returns a 404 status code and a empty item hash when an invalid item id is requested' do
         user = create(:user)
 
         get "/api/v1/users/#{user.id + 1}/subscription"

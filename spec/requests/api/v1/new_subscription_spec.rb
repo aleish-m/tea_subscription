@@ -7,10 +7,10 @@ describe 'Create new Subscription' do
       teas = create_list(:tea, 5)
 
       params = {  title: 'New Subscription',
-                  tea_ids: "#{teas.map {|tea| tea.id}.join(',')}",
+                  tea_ids: "#{teas.map { |tea| tea.id }.join(',')}",
                   frequency: 2 }
 
-      post "/api/v1/users/#{user.id}/subscription", params: params
+      post "/api/v1/users/#{user.id}/subscriptions", params: params
 
       expect(response).to be_successful
       expect(response).to have_http_status(201)
@@ -21,7 +21,7 @@ describe 'Create new Subscription' do
       created_subscription = user.subscriptions.last
 
       expect(created_subscription.title).to eq('New Subscription')
-      expect(created_subscription.status).to eq("active")
+      expect(created_subscription.status).to eq('active')
       expect(created_subscription.frequency).to eq(params[:frequency])
       expect(created_subscription.teas).to eq(teas)
 
@@ -45,19 +45,18 @@ describe 'Create new Subscription' do
       teas = create_list(:tea, 5)
 
       params = {  title: 'New Subscription',
-                  tea_ids: "#{teas.map {|tea| tea.id}.join(',')}",
+                  tea_ids: "#{teas.map { |tea| tea.id }.join(',')}",
                   frequency: 2 }
 
-      post "/api/v1/users/#{user.id + 1}/subscription", params: params
+      post "/api/v1/users/#{user.id + 1}/subscriptions", params: params
 
       expect(response).to have_http_status(400)
 
       subscription_data = JSON.parse(response.body, symbolize_names: true)
-  
+
       created_subscription = user.subscriptions.last
 
       expect(created_subscription).to eq(nil)
-
 
       expect(subscription_data).to be_a(Hash)
       expect(subscription_data.count).to eq(2)
@@ -73,18 +72,17 @@ describe 'Create new Subscription' do
       user = create(:user)
       teas = create_list(:tea, 5)
 
-      params = { tea_ids: "#{teas.map {|tea| tea.id}.join(',')}" }
+      params = { tea_ids: "#{teas.map { |tea| tea.id }.join(',')}" }
 
       post "/api/v1/users/#{user.id}/subscription", params: params
 
       expect(response).to have_http_status(400)
 
       subscription_data = JSON.parse(response.body, symbolize_names: true)
-  
+
       created_subscription = user.subscriptions.last
 
       expect(created_subscription).to eq(nil)
-
 
       expect(subscription_data).to be_a(Hash)
       expect(subscription_data.count).to eq(2)
@@ -93,7 +91,8 @@ describe 'Create new Subscription' do
       expect(subscription_data[:error]).to eq(400)
       expect(subscription_data).to have_key(:message)
       expect(subscription_data[:message]).to be_a(Array)
-      expect(subscription_data).to eq({ error: 400, message: ["Title can't be blank", "Frequency can't be blank", "Frequency is not a number", "Frequency is not included in the list"] })
+      expect(subscription_data).to eq({ error: 400,
+                                        message: ["Title can't be blank", "Frequency can't be blank", 'Frequency is not a number', 'Frequency value is not within 1-12'] })
     end
   end
 end

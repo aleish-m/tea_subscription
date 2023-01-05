@@ -42,7 +42,7 @@ This project used `Ruby 2.7.4`
 ## End Points
 
 ### Get all Subscriptions for a User
-GET `/api/v1/users/1/subscription`
+GET `/api/v1/users/1/subscriptions`
 
 JSON Contract:
 ```
@@ -83,7 +83,7 @@ Example for invalid request:
 ```
 
 ### Create a new User Subscription
-POST `/api/v1/users/1/subscription`
+POST `/api/v1/users/1/subscriptions`
 
 Required Request Params:
   - title (string)
