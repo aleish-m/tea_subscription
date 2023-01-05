@@ -10,7 +10,7 @@ describe 'Create new Subscription' do
                   tea_ids: "#{teas.map { |tea| tea.id }.join(',')}",
                   frequency: 2 }
 
-      post "/api/v1/users/#{user.id}/subscription", params: params
+      post "/api/v1/users/#{user.id}/subscriptions", params: params
 
       expect(response).to be_successful
       expect(response).to have_http_status(201)
@@ -48,7 +48,7 @@ describe 'Create new Subscription' do
                   tea_ids: "#{teas.map { |tea| tea.id }.join(',')}",
                   frequency: 2 }
 
-      post "/api/v1/users/#{user.id + 1}/subscription", params: params
+      post "/api/v1/users/#{user.id + 1}/subscriptions", params: params
 
       expect(response).to have_http_status(400)
 

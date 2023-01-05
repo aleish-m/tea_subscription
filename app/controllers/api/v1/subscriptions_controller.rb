@@ -1,4 +1,4 @@
-class Api::V1::SubscriptionController < ApplicationController
+class Api::V1::SubscriptionsController < ApplicationController
   def index
     user = User.find_by(id: params[:user_id])
 
@@ -32,7 +32,7 @@ class Api::V1::SubscriptionController < ApplicationController
     end
     
     rescue ArgumentError
-    add_status_error(subscription)
+    add_status_error(subscription) 
     render json: SubscriptionSerializer.error(400, subscription.errors.full_messages), status: :bad_request
   end
 

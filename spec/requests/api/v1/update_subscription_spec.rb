@@ -8,7 +8,7 @@ describe 'Update Subscriptions' do
 
       params = { status: 'cancelled' }
 
-      patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
+      patch "/api/v1/users/#{user.id}/subscriptions/#{subscription.id}", params: params
 
       subscription_response = JSON.parse(response.body, symbolize_names: true)
       subscription_data = subscription_response[:data]
@@ -44,7 +44,7 @@ describe 'Update Subscriptions' do
                  title: 'Update Subscription Title',
                  frequency: 5 }
 
-      patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
+      patch "/api/v1/users/#{user.id}/subscriptions/#{subscription.id}", params: params
 
       subscription_response = JSON.parse(response.body, symbolize_names: true)
       subscription_data = subscription_response[:data]
@@ -80,7 +80,7 @@ describe 'Update Subscriptions' do
         frequency: 'monthly'
       }
 
-      patch "/api/v1/users/#{user.id}/subscription/#{subscription.id}", params: params
+      patch "/api/v1/users/#{user.id}/subscriptions/#{subscription.id}", params: params
 
       subscription_response = JSON.parse(response.body, symbolize_names: true)
 

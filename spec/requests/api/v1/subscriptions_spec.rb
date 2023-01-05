@@ -6,7 +6,7 @@ describe 'View Subscriptions' do
       user = create(:user)
       subscriptions = create_list(:subscription, 5, user: user)
 
-      get "/api/v1/users/#{user.id}/subscription"
+      get "/api/v1/users/#{user.id}/subscriptions"
 
       expect(response).to be_successful
       expect(response).to have_http_status(200)
@@ -49,7 +49,7 @@ describe 'View Subscriptions' do
       it 'sends a empty list if there are no subscriptions for a user' do
         user = create(:user)
 
-        get "/api/v1/users/#{user.id}/subscription"
+        get "/api/v1/users/#{user.id}/subscriptions"
 
         expect(response).to be_successful
         expect(response).to have_http_status(200)
